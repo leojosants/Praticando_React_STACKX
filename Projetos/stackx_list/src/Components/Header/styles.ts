@@ -34,9 +34,12 @@ export const Content = styled.div`
             height: 2.85rem;
             border-radius: 50%;
         }
-    
     }
 
 `;
 
-export const ImageLogo = styled.img``;
+export const ImageLogo = styled.img`
+    padding:  5px 5px;
+    background: var(--dark-300);
+    border-radius: 8px;
+`;
