@@ -4,16 +4,17 @@ import {
     Content,
     ImageLogo,
 } from './styles';
-import {} from './styles';
-import logo from '../../assets/Icons/logo.svg';
+import logoSvg from '../../assets/Icons/logo.svg';
 
 export function Header() {
     return (
+        
         <Container>
+            <header></header>
             <Content>
-                <ImageLogo src={logo} alt='stackx' />
+                <ImageLogo src={logoSvg} alt='stackx' />
                 <button title='teste'>
-                    <img src="https://github.com/leojosants.png" alt="Imagem Logo"  />
+                    <img src="https://github.com/leojosants.png" alt="Imagem de Perfil"  />
                 </button>
             </Content>
         </Container>

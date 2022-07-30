@@ -21,7 +21,7 @@ export const GlobalStyle = createGlobalStyle`
 
     body {
         background: var(--background);
-        -webkit-font-smoothing: antialiases;
+        -webkit-font-smoothing: antialiased;
     }
 
     body, input, textarea, button {
@@ -44,4 +44,3 @@ export const GlobalStyle = createGlobalStyle`
     }
 
 `;
-
