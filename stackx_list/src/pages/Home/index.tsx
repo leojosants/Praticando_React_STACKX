@@ -1,5 +1,5 @@
 
-import { Header } from '../../Components/Header';
+import { Header } from '../../components/Header';
 import { 
     Container,
     Content,
@@ -25,7 +25,6 @@ export function Home() {
                     </select>
                 </div>
 
-                
               </FilterForm>
 
             </Content>
