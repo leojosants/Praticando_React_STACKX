@@ -15,7 +15,7 @@ export const Content = styled.div`
         font-weight: 600;
         font-size: 1.8rem;
         line-height: 2.1rem;
-        color: #FFFFFF;
+        color: var(--white);
         margin-top: 4.5rem;
     }
 `;
