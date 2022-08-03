@@ -9,6 +9,7 @@ import {
   TableContent
 } from "./styles";
 import { UserData } from "../../types";
+import { ModalInfo } from "../../components/ModalInfo";
 
 export function Home() {
 
@@ -17,7 +18,18 @@ export function Home() {
   const [isFetching, setIsFetching] = useState(true);
   const [error, setError] = useState(null);
   const [search, setSearch] = useState('');
+  const [isModalInfoOpen, setIsModalInfoOpen] = useState(false);
+  const [dataUser, setDataUser] = useState<UserData>();
   const [searchCountry, setSearchCountry] = useState('');
+
+  function handleOpenModalInfo(userSelected: UserData) {
+    setDataUser(userSelected);
+    setIsModalInfoOpen(true);
+  }
+
+  function handleCloseModalInfo() {
+    setIsModalInfoOpen(false);
+  }
 
   useEffect(() => {
     axios.get('https://randomuser.me/api/', {
@@ -126,7 +138,7 @@ export function Home() {
                           <td>{`${e.gender}`}</td>
                           <td>{`${e.nat}`}</td>
                           <td>
-                            <button>Visualizar</button>
+                            <button onClick={() => handleOpenModalInfo(e)}>Visualizar</button>
                           </td>
                         </tr>
                       )
@@ -141,6 +153,11 @@ export function Home() {
 
 
       </Content >
+      <ModalInfo
+        isOpen={isModalInfoOpen}
+        onRequestClose={handleCloseModalInfo}
+        userSelected={dataUser}
+      />
     </Container >
   );
 }
