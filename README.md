@@ -1,2 +1,2 @@
 # Praticando_React_STACKX
- Práticas do módulo Web 3.0
+ <a href="https://portal.stackx.com.br/"> Práticas do módulo Web 3.0 - StackX </a> 
