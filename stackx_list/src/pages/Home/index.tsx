@@ -14,7 +14,6 @@ import { ModalInfo } from "../../components/ModalInfo";
 export function Home() {
 
   const [dataFetching, setDataFetching] = useState<UserData[]>([]);
-  const [dataFetchingBackup, setDataFetchingBackup] = useState<UserData[]>([]);
   const [isFetching, setIsFetching] = useState(true);
   const [error, setError] = useState(null);
   const [search, setSearch] = useState('');
@@ -39,7 +38,6 @@ export function Home() {
     })
       .then(response => {
         setDataFetching(response.data.results)
-        setDataFetchingBackup(response.data.results);
       })
       .catch(error => {
         setError(error);
@@ -50,30 +48,40 @@ export function Home() {
 
   }, []);
 
-  useEffect(() => {
+  // useEffect(() => {
 
-    if (search.length !== 0) {
-      const filter = dataFetching.filter(e =>
-        e.name.first.toUpperCase().indexOf(search.toUpperCase()) >= 0 || e.name.last.toUpperCase().indexOf(search.toUpperCase()) >= 0
-      );
+  //   if (search.length !== 0) {
+  //     const filter = dataFetching.filter(e =>
+  //       e.name.first.toUpperCase().indexOf(search.toUpperCase()) >= 0 || e.name.last.toUpperCase().indexOf(search.toUpperCase()) >= 0
+  //     );
 
-      setDataFetching(filter);
-    }
-    else {
-      setDataFetching(dataFetchingBackup);
-    }
+  //     setDataFetching(filter);
+  //   }
+  //   else {
+  //     setDataFetching(dataFetchingBackup);
+  //   }
 
-  }, [search]);
+  // }, [search]);
 
-  useEffect(() => {
-    if (searchCountry !== '') {
-      const filterCountry = dataFetching.filter(a => a.location.country.toUpperCase().indexOf(searchCountry.toUpperCase()));
-      setDataFetching(filterCountry);
-    }
-    else {
-      setDataFetching(dataFetchingBackup);
-    }
-  }, [searchCountry])
+  // useEffect(() => {
+  //   if (searchCountry !== '') {
+  //     const filterCountry = dataFetching.filter(a => a.location.country.toUpperCase() === searchCountry.toUpperCase());
+  //     setDataFetching(filterCountry);
+  //   }
+  //   else {
+  //     setDataFetching(dataFetchingBackup);
+  //   }
+  // }, [searchCountry])
+
+  const filteredCountry = searchCountry.length > 0
+    ? dataFetching.filter(a => a.location.country.toUpperCase().includes(searchCountry.toUpperCase()))
+    : [];
+
+  const filteredName = search.length > 0
+    ? dataFetching.filter(a => (a.name.first.toUpperCase() || a.name.last.toUpperCase()).includes(search.toUpperCase()))
+    : [];
+
+  const actuallyFilter = search.length > 0 ? filteredName : filteredCountry;
 
   return (
     <Container>
@@ -103,7 +111,7 @@ export function Home() {
                     name="nascionalidade"
                     id="nascionalidade"
                     onChange={(e) => setSearchCountry(e.target.value)}
-                    // value={searchCountry}
+                    value={searchCountry}
                   >
                     <option value="">Todas</option>
 
@@ -131,20 +139,34 @@ export function Home() {
 
                 <tbody>
                   {
-                    dataFetching.map((e, index) => {
-                      return (
-                        <tr key={index}>
-                          <td>{`${e.name.first} ${e.name.last}`}</td>
-                          <td>{`${e.gender}`}</td>
-                          <td>{`${e.nat}`}</td>
-                          <td>
-                            <button onClick={() => handleOpenModalInfo(e)}>Visualizar</button>
-                          </td>
-                        </tr>
-                      )
-                    })
+                    searchCountry.length > 0 || search.length > 0 ? (
+                      actuallyFilter.map((e, index) => {
+                        return (
+                          <tr key={index}>
+                            <td>{`${e.name.first} ${e.name.last}`}</td>
+                            <td>{`${e.gender}`}</td>
+                            <td>{`${e.location.country}`}</td>
+                            <td>
+                              <button onClick={() => handleOpenModalInfo(e)}>Visualizar</button>
+                            </td>
+                          </tr>
+                        )
+                      })
+                    ) : (
+                      dataFetching.map((e, index) => {
+                        return (
+                          <tr key={index}>
+                            <td>{`${e.name.first} ${e.name.last}`}</td>
+                            <td>{`${e.gender}`}</td>
+                            <td>{`${e.location.country}`}</td>
+                            <td>
+                              <button onClick={() => handleOpenModalInfo(e)}>Visualizar</button>
+                            </td>
+                          </tr>
+                        )
+                      })
+                    )
                   }
-
                 </tbody>
               </TableContent>
             </>
